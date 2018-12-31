@@ -9,12 +9,12 @@ eureka="eureka"
 persist="persist"
 request="request"
 savefiles="savefiles"
-postgres="postgres_10_vagrant"
-postgres_port="5433"
-export postgres_user="postgres"
-export postgres_password="docker"
-export database_name="identity_management"
-STARS=$'\n****************************************************************************************\n'
+#postgres="postgres_10_vagrant"
+#postgres_port="5433"
+#export postgres_user="postgres"
+#export postgres_password="docker"
+#export database_name="identity_management"
+export STARS=$'\n****************************************************************************************\n'
 
 cd ../
 
@@ -35,31 +35,15 @@ sudo apt install docker.io -y
 sudo usermod -a -G docker $USER
 sudo chmod 666 /var/run/docker.sock
 
-echo "$STARS" "Try to get docker images with postgres" "$STARS"
-docker pull postgres
-
-echo "$STARS" "Try to get docker images with mongo db" "$STARS"
-docker pull mongo
-
-postgres_image=$(docker images -q postgres)
-mongo_image=$(docker images -q mongo)
-
-echo "$STARS" "Create directory for docker postgres database" "$STARS"
-postgres_path=""$HOME"/docker/volumes/postgres"
-mkdir -p "$postgres_path"
-
-echo "$STARS" "Create directory for docker mongo-db database" "$STARS"
-mongo_path=""$HOME"/docker/volumes/mongo_db"
-mkdir -p "$mongo_path"
-
-echo "$STARS" "Run docker postgres database" "$STARS"
-docker run --rm --name pg-docker -e POSTGRES_PASSWORD="$postgres_password" -d -p 5432:5432 -v "$postgres_path":/var/lib/postgresql/data  postgres
-
-echo "$STARS" "Install postgres client" "$STARS"
-sudo apt install postgresql-client
+chmod +x "$main_dir"/postgres_db.sh && source "$main_dir"/postgres_db.sh
 
 
-PGPASSWORD="$postgres_password" psql -U "$postgres_user" -h localhost
+#echo "$STARS" "Try to get docker images with mongo db" "$STARS"
+#docker pull mongo
+#mongo_image=$(docker images -q mongo)
+#echo "$STARS" "Create directory for docker mongo-db database" "$STARS"
+#mongo_path=""$HOME"/docker/volumes/mongo_db"
+#mkdir -p "$mongo_path"
 
 
 
