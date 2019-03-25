@@ -11,6 +11,7 @@ eureka="eureka"
 persist="persist"
 request="request"
 savefiles="savefiles"
+entity="entity"
 export STARS=$'\n****************************************************************************************\n'
 
 export MAIN_DIR=$(pwd)
